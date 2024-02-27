@@ -2741,11 +2741,18 @@ const styles = (theme: ThemeColors) =>
             opacity: 0.5,
         },
 
+        threadDividerLineContainer: {
+            flexDirection: 'row-reverse',
+            alignItems: 'center',
+            width: '100%',
+            paddingHorizontal: 20,
+        },
+
         threadDividerLine: {
             height: 1,
             backgroundColor: theme.border,
             flexGrow: 1,
-            marginHorizontal: 20,
+            marginLeft: 8,
         },
 
         unreadIndicatorText: {

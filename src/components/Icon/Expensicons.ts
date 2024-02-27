@@ -38,6 +38,7 @@ import Checkmark from '@assets/images/checkmark.svg';
 import Close from '@assets/images/close.svg';
 import ClosedSign from '@assets/images/closed-sign.svg';
 import Collapse from '@assets/images/collapse.svg';
+import CommentBubbleReply from '@assets/images/comment-bubble-reply.svg';
 import Concierge from '@assets/images/concierge.svg';
 import Connect from '@assets/images/connect.svg';
 import Copy from '@assets/images/copy.svg';
@@ -189,6 +190,7 @@ export {
     Close,
     ClosedSign,
     Collapse,
+    CommentBubbleReply,
     Concierge,
     ConciergeAvatar,
     Connect,

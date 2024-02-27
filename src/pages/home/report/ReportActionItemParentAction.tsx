@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {View} from 'react-native';
 import type {OnyxEntry} from 'react-native-onyx';
 import OfflineWithFeedback from '@components/OfflineWithFeedback';
+import UnreadActionIndicator from '@components/UnreadActionIndicator';
 import useStyleUtils from '@hooks/useStyleUtils';
 import useThemeStyles from '@hooks/useThemeStyles';
 import useWindowDimensions from '@hooks/useWindowDimensions';
@@ -73,7 +74,7 @@ function ReportActionItemParentAction({report, parentReportAction, index = 0, sh
         <View style={[StyleUtils.getReportWelcomeContainerStyle(isSmallScreenWidth)]}>
             <AnimatedEmptyStateBackground />
             <View style={[StyleUtils.getReportWelcomeTopMarginStyle(isSmallScreenWidth)]} />
-            {allAncestors.map((ancestor) => (
+            {allAncestors.map((ancestor, i) => (
                 <OfflineWithFeedback
                     key={ancestor.reportAction.reportActionID}
                     shouldDisableOpacity={Boolean(ancestor.reportAction?.pendingAction)}
@@ -82,6 +83,10 @@ function ReportActionItemParentAction({report, parentReportAction, index = 0, sh
                     errorRowStyles={[styles.ml10, styles.mr2]}
                     onClose={() => Report.navigateToConciergeChatAndDeleteReport(ancestor.report.reportID)}
                 >
+                    <UnreadActionIndicator
+                        reportActionID={ancestor.report.reportID}
+                        isThreadDividerLine={true}
+                    />
                     <ReportActionItem
                         onPress={() => Navigation.navigate(ROUTES.REPORT_WITH_ID.getRoute(ancestor.report.reportID))}
                         parentReportAction={parentReportAction}
@@ -92,7 +97,13 @@ function ReportActionItemParentAction({report, parentReportAction, index = 0, sh
                         shouldDisplayNewMarker={ancestor.shouldDisplayNewMarker}
                         index={index}
                     />
-                    {!ancestor.shouldHideThreadDividerLine && <View style={[styles.threadDividerLine]} />}
+                    {i === allAncestors.length - 1 && (
+                        <UnreadActionIndicator
+                            reportActionID={ancestor.report.reportID}
+                            isThreadDividerLine={true}
+                            isLastThread={i === allAncestors.length - 1}
+                        />
+                    )}
                 </OfflineWithFeedback>
             ))}
         </View>
