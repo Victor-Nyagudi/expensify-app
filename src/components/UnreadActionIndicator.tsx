@@ -2,13 +2,10 @@ import React from 'react';
 import {View} from 'react-native';
 import useLocalize from '@hooks/useLocalize';
 import useThemeStyles from '@hooks/useThemeStyles';
-import Navigation from '@libs/Navigation/Navigation';
 import variables from '@styles/variables';
 import CONST from '@src/CONST';
-import ROUTES from '@src/ROUTES';
 import Icon from './Icon';
 import * as Expensicons from './Icon/Expensicons';
-import {PressableWithoutFeedback} from './Pressable';
 import Text from './Text';
 
 type UnreadActionIndicatorProps = {
@@ -21,46 +18,6 @@ function UnreadActionIndicator({reportActionID, isThreadDividerLine = false, isL
     const styles = useThemeStyles();
     const {translate} = useLocalize();
 
-    const threadDivider = isLastThread ? (
-        <>
-            <View style={[styles.flexRow, styles.alignItemsCenter]}>
-                <Icon
-                    src={Expensicons.CommentBubbleReply}
-                    // Removed the fill at the end of comment-bubble-reply.svg so this one can be applied,
-                    // otherwise it would just be the blue color from when I downloaded it from Figma.
-                    fill={styles.textSupporting.color}
-                    width={variables.iconSizeExtraSmall}
-                    height={variables.iconSizeExtraSmall}
-                    additionalStyles={styles.mr1}
-                />
-
-                <Text style={[styles.unreadIndicatorText, styles.textSupporting]}>{'Replies'}</Text>
-            </View>
-        </>
-    ) : (
-        <PressableWithoutFeedback
-            onPress={() => {
-                console.log('You clicked the thread divider.');
-                Navigation.navigate(ROUTES.REPORT_WITH_ID.getRoute(reportActionID));
-            }}
-            // This will be translated like in ParentNavigationSubtitle
-            accessibilityLabel={'Ancestor parent report'}
-            role={CONST.ROLE.LINK}
-            // Giving this a height of 20 oddly matched the vertical margin in the design.
-            style={[styles.flexRow, styles.alignItemsCenter, {height: 20}]}
-        >
-            <Icon
-                src={Expensicons.CommentBubbleReply}
-                fill={styles.link.color}
-                width={variables.iconSizeExtraSmall}
-                height={variables.iconSizeExtraSmall}
-                additionalStyles={styles.mr1}
-            />
-
-            <Text style={[styles.unreadIndicatorText, styles.link]}>{'Thread'}</Text>
-        </PressableWithoutFeedback>
-    );
-
     return (
         <View
             accessibilityLabel={translate('accessibilityHints.newMessageLineIndicator')}
@@ -70,7 +27,23 @@ function UnreadActionIndicator({reportActionID, isThreadDividerLine = false, isL
         >
             <View style={isThreadDividerLine ? styles.threadDividerLine : styles.unreadIndicatorLine} />
 
-            {isThreadDividerLine ? threadDivider : <Text style={styles.unreadIndicatorText}>{translate('common.new')}</Text>}
+            {isThreadDividerLine ? (
+                <View style={[styles.flexRow, styles.alignItemsCenter]}>
+                    <Icon
+                        src={Expensicons.CommentBubbleReply}
+                        // Removed the 'fill' at the end of the <path>  of comment-bubble-reply.svg so this one can be applied,otherwise, it would just be the blue color from when I downloaded it from Figma.
+                        // Also removed the 'fill=none' from the <svg> because it wasn't rendering on Android native.
+                        fill={isLastThread ? styles.textSupporting.color : styles.link.color}
+                        width={variables.iconSizeExtraSmall}
+                        height={variables.iconSizeExtraSmall}
+                        additionalStyles={styles.mr1}
+                    />
+
+                    <Text style={[styles.unreadIndicatorText, isLastThread ? styles.textSupporting : styles.link]}>{isLastThread ? 'Replies' : 'Thread'}</Text>
+                </View>
+            ) : (
+                <Text style={styles.unreadIndicatorText}>{translate('common.new')}</Text>
+            )}
         </View>
     );
 }

@@ -84,7 +84,7 @@ function ReportActionItemParentAction({report, parentReportAction, index = 0, sh
                     onClose={() => Report.navigateToConciergeChatAndDeleteReport(ancestor.report.reportID)}
                 >
                     <UnreadActionIndicator
-                        reportActionID={ancestor.report.reportID}
+                        reportActionID={ancestor.reportAction.reportActionID}
                         isThreadDividerLine={true}
                     />
                     <ReportActionItem
@@ -99,7 +99,7 @@ function ReportActionItemParentAction({report, parentReportAction, index = 0, sh
                     />
                     {i === allAncestors.length - 1 && (
                         <UnreadActionIndicator
-                            reportActionID={ancestor.report.reportID}
+                            reportActionID={ancestor.reportAction.reportActionID}
                             isThreadDividerLine={true}
                             isLastThread={i === allAncestors.length - 1}
                         />
