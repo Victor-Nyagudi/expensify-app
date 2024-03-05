@@ -86,9 +86,10 @@ function ReportActionItemParentAction({report, parentReportAction, index = 0, sh
                     <UnreadActionIndicator
                         reportActionID={ancestor.reportAction.reportActionID}
                         isThreadDividerLine={true}
+                        parentReportID={ancestor.report.parentReportID}
                     />
                     <ReportActionItem
-                        onPress={() => Navigation.navigate(ROUTES.REPORT_WITH_ID.getRoute(ancestor.report.reportID))}
+                        onPress={() => Navigation.navigate(ROUTES.REPORT_WITH_ID.getRoute(ancestor.report.parentReportID))}
                         parentReportAction={parentReportAction}
                         report={ancestor.report}
                         action={ancestor.reportAction}

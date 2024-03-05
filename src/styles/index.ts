@@ -2746,7 +2746,7 @@ const styles = (theme: ThemeColors) =>
             alignItems: 'center',
             width: '100%',
             paddingHorizontal: 20,
-            paddingVertical: 4
+            paddingVertical: 4,
         },
 
         threadDividerLine: {
