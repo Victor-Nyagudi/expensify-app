@@ -98,7 +98,7 @@ function ReportActionItemParentAction({report, parentReportAction, index = 0, sh
                         shouldDisplayNewMarker={ancestor.shouldDisplayNewMarker}
                         index={index}
                     />
-                    {i === allAncestors.length - 1 && (
+                    {!shouldHideThreadDividerLine && i === allAncestors.length - 1 && (
                         <UnreadActionIndicator
                             reportActionID={ancestor.reportAction.reportActionID}
                             isThreadDividerLine={true}
