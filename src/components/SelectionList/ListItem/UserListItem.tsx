@@ -89,7 +89,7 @@ function UserListItem<TItem extends ListItem>({
             canSelectMultiple={canSelectMultiple}
             onSelectRow={onSelectRow}
             onDismissError={onDismissError}
-            shouldPreventEnterKeySubmit={shouldPreventEnterKeySubmit}
+            shouldPreventEnterKeySubmit={!item.shouldShowRightCaret}
             rightHandSideComponent={rightHandSideComponent}
             errors={item.errors}
             pendingAction={item.pendingAction}
